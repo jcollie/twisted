@@ -1,0 +1,2 @@
+twisted.web.server.Request.getSession() correctly sets default session cookie in Python3, previously cookie name
+was set to b"TWISTED_SESSION" instead of just "TWISTED_SESSION"

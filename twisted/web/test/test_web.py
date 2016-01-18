@@ -209,6 +209,7 @@ class SessionTests(unittest.TestCase):
 
 
 
+
 # Conditional requests:
 # If-None-Match, If-Modified-Since
 
@@ -551,6 +552,21 @@ class RequestTests(unittest.TestCase):
         # failure
         self.assertEqual(1, len(self.flushLoggedErrors()))
 
+    def test_setDefaultSessionCookie(self):
+        """
+        """
+        d = DummyChannel()
+        request = server.Request(d, 1)
+        request.site = server.Site(resource.Resource())
+        request.sitepath = []
+        request.gotLength(0)
+        session = request.getSession()
+        request.requestReceived(b'GET', b'/', b'HTTP/1.0')
+        cookie_name, _ = request.cookies[0].split("=", 1)
+        # avoid delayed calls lingering after test exit
+        session.expire()
+        self.assertTrue(bool(request.session))
+        self.assertEqual(cookie_name, "TWISTED_SESSION")
 
 
 class GzipEncoderTests(unittest.TestCase):

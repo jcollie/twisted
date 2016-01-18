@@ -392,7 +392,7 @@ class Request(Copyable, http.Request, components.Componentized):
     def getSession(self, sessionInterface=None):
         # Session management
         if not self.session:
-            cookiename = b"_".join([b'TWISTED_SESSION'] + self.sitepath)
+            cookiename = "_".join(['TWISTED_SESSION'] + self.sitepath)
             sessionCookie = self.getCookie(cookiename)
             if sessionCookie:
                 try:
@@ -402,7 +402,7 @@ class Request(Copyable, http.Request, components.Componentized):
             # if it still hasn't been set, fix it up.
             if not self.session:
                 self.session = self.site.makeSession()
-                self.addCookie(cookiename, self.session.uid, path=b'/')
+                self.addCookie(cookiename, self.session.uid, path='/')
         self.session.touch()
         if sessionInterface:
             return self.session.getComponent(sessionInterface)
